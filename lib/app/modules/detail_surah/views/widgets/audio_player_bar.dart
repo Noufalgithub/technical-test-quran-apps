@@ -4,8 +4,9 @@ import 'package:quran_apps/app/constants/app_colors.dart';
 class AudioPlayerBar extends StatelessWidget {
   final String title;
   final String artist;
-  final Duration current;
-  final Duration total;
+  final String current;
+  final String total;
+  final Widget progressDisplay;
   final VoidCallback onPlayPause;
   final VoidCallback onNext;
   final VoidCallback onPrevious;
@@ -21,14 +22,11 @@ class AudioPlayerBar extends StatelessWidget {
     required this.onNext,
     required this.onPrevious,
     this.isPlaying = false,
+    required this.progressDisplay,
   });
 
   @override
   Widget build(BuildContext context) {
-    final progressPercent = total.inMilliseconds == 0
-        ? 0.0
-        : current.inMilliseconds / total.inMilliseconds;
-
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
@@ -70,24 +68,11 @@ class AudioPlayerBar extends StatelessWidget {
           // Progress Slider
           Row(
             children: [
-              Text(
-                _formatDuration(current),
-                style: const TextStyle(fontSize: 12),
-              ),
+              Text(current, style: const TextStyle(fontSize: 12)),
               const SizedBox(width: 8),
-              Expanded(
-                child: Slider(
-                  value: progressPercent.clamp(0.0, 1.0),
-                  onChanged: (_) {}, // Optional: handle seek
-                  activeColor: const Color(0xFF2F855A),
-                  inactiveColor: Colors.grey.shade300,
-                ),
-              ),
+              Expanded(child: progressDisplay),
               const SizedBox(width: 8),
-              Text(
-                _formatDuration(total),
-                style: const TextStyle(fontSize: 12),
-              ),
+              Text(total, style: const TextStyle(fontSize: 12)),
             ],
           ),
           // Controls
@@ -127,10 +112,5 @@ class AudioPlayerBar extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _formatDuration(Duration d) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    return "${twoDigits(d.inMinutes)}:${twoDigits(d.inSeconds.remainder(60))}";
   }
 }

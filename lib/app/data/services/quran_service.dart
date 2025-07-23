@@ -19,7 +19,7 @@ class QuranService {
   Future<AyatModel> getDetailSurah(int nomor) async {
     try {
       final response = await _dio.get('/surah/$nomor');
-      return AyatModel.fromJson(response.data ?? {});
+      return AyatModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(e.message);
     }
