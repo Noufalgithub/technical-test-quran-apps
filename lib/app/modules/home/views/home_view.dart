@@ -106,10 +106,7 @@ class HomeView extends GetView<HomeController> {
                           onTap: () {
                             Get.toNamed(
                               Routes.detailSurah,
-                              arguments: {
-                                'surahNumber': index + 1,
-                                'surahName': 'Al-Fatihah',
-                              },
+                              arguments: {'nomorSurah': surah.nomor},
                             );
                           },
                           child: ListTile(
