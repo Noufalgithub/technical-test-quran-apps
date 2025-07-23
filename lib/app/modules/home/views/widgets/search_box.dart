@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SearchBox extends StatelessWidget {
-  final TextEditingController controller;
   final ValueChanged<String>? onChanged;
 
-  const SearchBox({super.key, required this.controller, this.onChanged});
+  const SearchBox({super.key, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,6 @@ class SearchBox extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: TextField(
-              controller: controller,
               onChanged: onChanged,
               decoration: const InputDecoration(
                 hintText: 'Cari surah...',

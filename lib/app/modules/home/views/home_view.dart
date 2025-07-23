@@ -11,8 +11,6 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final TextEditingController searchController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -59,6 +57,7 @@ class HomeView extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 6),
                   title: const Text(
                     'Terakhir Dibaca',
                     style: TextStyle(fontSize: 16, color: Colors.white),
@@ -83,10 +82,7 @@ class HomeView extends GetView<HomeController> {
               ),
               const SizedBox(height: 6),
               SearchBox(
-                controller: searchController,
-                onChanged: (value) {
-                  // handle pencarian di sini
-                },
+                onChanged: (value) => controller.searchText.value = value,
               ),
               Expanded(
                 child: ListView.builder(
