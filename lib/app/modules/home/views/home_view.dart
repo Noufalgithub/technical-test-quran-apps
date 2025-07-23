@@ -40,104 +40,143 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: ListTile(
-                title: const Text(
-                  'Terakhir Dibaca',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return SafeArea(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
                 ),
-                subtitle: const Text(
-                  'Al-Fatihah',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ListTile(
+                  title: const Text(
+                    'Terakhir Dibaca',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
+                  subtitle: const Text(
+                    'Al-Fatihah',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: const Icon(
+                    size: 30,
+                    Icons.keyboard_arrow_right,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    // Aksi ketika tile ditekan
+                  },
                 ),
-                trailing: const Icon(
-                  size: 30,
-                  Icons.keyboard_arrow_right,
-                  color: Colors.white,
-                ),
-                onTap: () {
-                  // Aksi ketika tile ditekan
+              ),
+              const SizedBox(height: 6),
+              SearchBox(
+                controller: searchController,
+                onChanged: (value) {
+                  // handle pencarian di sini
                 },
               ),
-            ),
-            const SizedBox(height: 6),
-            SearchBox(
-              controller: searchController,
-              onChanged: (value) {
-                // handle pencarian di sini
-              },
-            ),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Get.toNamed(
-                        Routes.DETAIL_SURAH,
-                        arguments: {
-                          'surahNumber': index + 1,
-                          'surahName': 'Al-Fatihah',
-                        },
-                      );
-                    },
-                    child: Container(
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: controller.surahList.length,
+                  itemBuilder: (context, index) {
+                    final surah = controller.surahList[index];
+
+                    return Container(
                       margin: const EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.grey.shade300),
                       ),
-                      child: ListTile(
-                        leading: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              '114',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
+                      child: Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(12),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.detailSurah,
+                              arguments: {
+                                'surahNumber': index + 1,
+                                'surahName': 'Al-Fatihah',
+                              },
+                            );
+                          },
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                            leading: Container(
+                              width: 50,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: BorderRadius.circular(8),
                               ),
+                              child: Center(
+                                child: Text(
+                                  surah.nomor.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              surah.namaLatin ?? '',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              surah.arti ?? '',
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            trailing: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  surah.jumlahAyat.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Text(
+                                  'Ayat',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        title: const Text(
-                          'Al-Fatihah',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: const Text('Pembukaan -  7 Ayat'),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

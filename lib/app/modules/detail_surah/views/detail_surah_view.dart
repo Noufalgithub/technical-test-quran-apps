@@ -22,7 +22,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
           child: ElevatedButton(
             onPressed: () {
               Get.toNamed(
-                Routes.PLAYER_DETAIL_SURAH,
+                Routes.playerDetailSurah,
                 arguments: {'surahName': surahName},
               );
             },

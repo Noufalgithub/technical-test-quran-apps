@@ -3,14 +3,14 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
-  static const HOME = _Paths.HOME;
-  static const DETAIL_SURAH = _Paths.DETAIL_SURAH;
-  static const PLAYER_DETAIL_SURAH = _Paths.PLAYER_DETAIL_SURAH;
+  static const home = _Paths.home;
+  static const detailSurah = _Paths.detailSurah;
+  static const playerDetailSurah = _Paths.playerDetailSurah;
 }
 
 abstract class _Paths {
   _Paths._();
-  static const HOME = '/home';
-  static const DETAIL_SURAH = '/detail-surah';
-  static const PLAYER_DETAIL_SURAH = '/player-detail-surah';
+  static const home = '/home';
+  static const detailSurah = '/detail-surah';
+  static const playerDetailSurah = '/player-detail-surah';
 }
