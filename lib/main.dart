@@ -12,7 +12,6 @@ void main() {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       theme: ThemeData(
-        primarySwatch: Colors.green,
         scaffoldBackgroundColor: Colors.grey.shade50,
         appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade50),
       ),

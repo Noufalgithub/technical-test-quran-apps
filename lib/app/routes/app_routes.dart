@@ -4,9 +4,13 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
+  static const DETAIL_SURAH = _Paths.DETAIL_SURAH;
+  static const PLAYER_DETAIL_SURAH = _Paths.PLAYER_DETAIL_SURAH;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
+  static const DETAIL_SURAH = '/detail-surah';
+  static const PLAYER_DETAIL_SURAH = '/player-detail-surah';
 }
