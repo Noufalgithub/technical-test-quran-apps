@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quran_apps/app/theme/app_colors.dart';
+import 'package:quran_apps/app/constants/app_colors.dart';
 
 class AudioPlayerBar extends StatelessWidget {
   final String title;

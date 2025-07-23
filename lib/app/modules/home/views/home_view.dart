@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:quran_apps/app/routes/app_pages.dart';
-import 'package:quran_apps/app/theme/app_colors.dart';
+import 'package:quran_apps/app/constants/app_colors.dart';
 
 import '../controllers/home_controller.dart';
 import 'widgets/search_box.dart';
@@ -15,16 +15,27 @@ class HomeView extends GetView<HomeController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Assalamu'alaikum",
-              style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+            const Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Assalamu'alaikum",
+                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                ),
+                Text(
+                  "Mari Mengaji",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
-            Text(
-              "Mari Mengaji",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Image.asset(
+              'assets/images/logo-quran-apps.png',
+              width: 60,
+              height: 60,
             ),
           ],
         ),

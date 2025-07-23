@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:quran_apps/app/routes/app_pages.dart';
-import 'package:quran_apps/app/theme/app_colors.dart';
+import 'package:quran_apps/app/constants/app_colors.dart';
 
 import '../controllers/detail_surah_controller.dart';
 
