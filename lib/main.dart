@@ -7,8 +7,9 @@ import 'app/routes/app_pages.dart';
 
 GetStorage box = GetStorage();
 
-void main() {
-  GetStorage.init();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
 
   runApp(
     GetMaterialApp(

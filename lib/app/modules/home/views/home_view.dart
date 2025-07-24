@@ -48,8 +48,7 @@ class HomeView extends GetView<HomeController> {
         return SafeArea(
           child: Column(
             children: [
-              (box.read(StringConstants.lastReadNomorSurah) != null ||
-                      controller.lastReadNomorSurah.value != 0)
+              (box.read(StringConstants.lastReadNomorSurah) != null)
                   ? Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
