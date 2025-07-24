@@ -42,14 +42,6 @@ Quran Apps adalah aplikasi mobile Flutter yang menyediakan kemudahan untuk memba
 
 ---
 
-## 📸 Tampilan Aplikasi
-
-| Home | Detail Surah | Audio Player |
-|------|---------------|---------------|
-| ![Home](screenshots/home.jpg) | ![Detail](screenshots/detail.jpg) | ![Player](screenshots/player.jpg) |
-
----
-
 ## 🏁 Cara Menjalankan
 
 ```bash
