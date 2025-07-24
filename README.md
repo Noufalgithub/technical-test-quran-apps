@@ -1,16 +1,39 @@
-# quran_apps
+# 📖 Quran Apps
 
-A new Flutter project.
+Quran Apps adalah aplikasi mobile Flutter yang menyediakan kemudahan untuk membaca dan mendengarkan Al-Qur'an secara lengkap dan interaktif. Aplikasi ini mendukung fitur **audio player**, **terakhir dibaca**, dan tampilan modern untuk memudahkan pengguna dalam mengakses ayat suci Al-Qur'an.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✨ Fitur Unggulan
 
-A few resources to get you started if this is your first Flutter project:
+- 🔍 **Cari Surah** berdasarkan nama
+- 📚 **Daftar Surah** (114 surah) lengkap
+- 📖 **Detail Surah**:
+  - Teks Arab
+  - Latin
+  - Terjemahan
+  - Deskripsi
+- ✅ **Terakhir Dibaca (Last Read)** – langsung tampil di halaman utama
+- 🎧 **Audio Player Lengkap**:
+  - Play, Pause, Resume
+  - Next Ayat & Previous Ayat
+  - Menampilkan progress audio
+- ⏩ Navigasi ke **surah selanjutnya** dan **sebelumnya**
+- 📱 UI clean, minimalis & responsive
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🧪 Teknologi yang Digunakan
+
+| Tools             | Keterangan                           |
+|-------------------|--------------------------------------|
+| Flutter           | Framework utama                      |
+| GetX              | State Management + Routing + Binding |
+| Dio               | HTTP Client untuk fetch API          |
+| GetStorage        | Local storage (terakhir dibaca)      |
+| Just Audio        | Pemutar audio                        |
+
+---
+
+## 🔧 Arsitektur Folder
+
