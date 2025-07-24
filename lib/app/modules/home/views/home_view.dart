@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:quran_apps/app/constants/string_constants.dart';
 import 'package:quran_apps/app/routes/app_pages.dart';
 import 'package:quran_apps/app/constants/app_colors.dart';
+import 'package:quran_apps/main.dart';
 
 import '../controllers/home_controller.dart';
 import 'widgets/search_box.dart';
@@ -46,40 +48,56 @@ class HomeView extends GetView<HomeController> {
         return SafeArea(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 6),
-                  title: const Text(
-                    'Terakhir Dibaca',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  subtitle: const Text(
-                    'Al-Fatihah',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: const Icon(
-                    size: 30,
-                    Icons.keyboard_arrow_right,
-                    color: Colors.white,
-                  ),
-                  onTap: () {
-                    // Aksi ketika tile ditekan
-                  },
-                ),
-              ),
+              (box.read(StringConstants.lastReadNomorSurah) != null ||
+                      controller.lastReadNomorSurah.value != 0)
+                  ? Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                        ),
+                        title: const Text(
+                          'Terakhir Dibaca',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        subtitle: Text(
+                          controller.getSurahNameByNumber(),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          size: 30,
+                          Icons.keyboard_arrow_right,
+                          color: Colors.white,
+                        ),
+                        onTap: () {
+                          Get.toNamed(
+                            Routes.detailSurah,
+                            arguments: {
+                              'nomorSurah': box.read(
+                                StringConstants.lastReadNomorSurah,
+                              ),
+                              'namaSurah': controller.getSurahNameByNumber(),
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  : const SizedBox(),
               const SizedBox(height: 6),
               SearchBox(
                 onChanged: (value) => controller.searchText.value = value,
@@ -106,7 +124,10 @@ class HomeView extends GetView<HomeController> {
                           onTap: () {
                             Get.toNamed(
                               Routes.detailSurah,
-                              arguments: {'nomorSurah': surah.nomor},
+                              arguments: {
+                                'nomorSurah': surah.nomor,
+                                'namaSurah': surah.namaLatin,
+                              },
                             );
                           },
                           child: ListTile(

@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quran_apps/app/constants/string_constants.dart';
 import 'package:quran_apps/app/data/models/surah_model/surah_model.dart';
 import 'package:quran_apps/app/data/services/quran_service.dart';
+import 'package:quran_apps/main.dart';
 
 class HomeController extends GetxController {
   final QuranService _quranService;
@@ -11,16 +14,18 @@ class HomeController extends GetxController {
   var surahList = <SurahModel>[].obs;
   var isLoading = false.obs;
   var searchText = ''.obs;
+  var lastReadNomorSurah = 0.obs;
 
   @override
   void onInit() {
-    super.onInit();
     fetchSurahs();
     debounce(
       searchText,
       (_) => applyFilter(),
       time: const Duration(milliseconds: 300),
     );
+
+    super.onInit();
   }
 
   void fetchSurahs() async {
@@ -30,7 +35,12 @@ class HomeController extends GetxController {
       allSurah.assignAll(result);
       surahList.assignAll(result);
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -48,5 +58,19 @@ class HomeController extends GetxController {
         }),
       );
     }
+  }
+
+  void saveLastRead({required int nomorSurah}) {
+    box.write(StringConstants.lastReadNomorSurah, nomorSurah);
+
+    lastReadNomorSurah.value = nomorSurah;
+  }
+
+  String getSurahNameByNumber() {
+    final surah = surahList.firstWhere(
+      (s) => s.nomor == lastReadNomorSurah.value,
+      orElse: () => SurahModel(nomor: 0, namaLatin: '-'),
+    );
+    return surah.namaLatin ?? '-';
   }
 }

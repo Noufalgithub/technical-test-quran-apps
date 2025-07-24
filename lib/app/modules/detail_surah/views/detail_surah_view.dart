@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import 'package:get/get.dart';
+import 'package:quran_apps/app/modules/home/controllers/home_controller.dart';
 import 'package:quran_apps/app/routes/app_pages.dart';
 import 'package:quran_apps/app/constants/app_colors.dart';
 
@@ -11,6 +12,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
   const DetailSurahView({super.key});
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.find<HomeController>();
     final args = Get.arguments ?? {};
 
     final int nomorSurah = args['nomorSurah'];
@@ -22,6 +24,9 @@ class DetailSurahView extends GetView<DetailSurahController> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: ElevatedButton(
             onPressed: () {
+              // for last read surah
+              homeController.saveLastRead(nomorSurah: nomorSurah);
+
               Get.toNamed(
                 Routes.playerDetailSurah,
                 arguments: {'nomorSurah': nomorSurah},

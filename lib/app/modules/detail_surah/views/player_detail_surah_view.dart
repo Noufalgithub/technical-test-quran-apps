@@ -14,65 +14,72 @@ class PlayerDetailSurahView extends GetView<DetailSurahController> {
     return Obx(() {
       final detail = controller.surahDetail.value;
 
-      return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(detail?.namaLatin ?? ''),
-            centerTitle: true,
-          ),
-          body: ListView.builder(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 40),
-            itemCount: detail?.ayat?.length ?? 0,
-            itemBuilder: (context, index) {
-              final ayat = detail?.ayat?[index];
+      // ignore: deprecated_member_use
+      return WillPopScope(
+        onWillPop: () async {
+          controller.onClose();
+          return true;
+        },
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(detail?.namaLatin ?? ''),
+              centerTitle: true,
+            ),
+            body: ListView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 40),
+              itemCount: detail?.ayat?.length ?? 0,
+              itemBuilder: (context, index) {
+                final ayat = detail?.ayat?[index];
 
-              return AyatCard(
-                number: ayat?.nomor.toString() ?? '',
-                arabic: ayat?.ar ?? '',
-                translation: ayat?.idn ?? '',
-              );
-            },
-          ),
+                return AyatCard(
+                  number: ayat?.nomor.toString() ?? '',
+                  arabic: ayat?.ar ?? '',
+                  translation: ayat?.idn ?? '',
+                );
+              },
+            ),
 
-          bottomNavigationBar: StreamBuilder<DurationState>(
-            stream: controller.durationState,
-            builder: (context, snapshot) {
-              final data = snapshot.data;
-              final position = data?.position ?? Duration.zero;
-              final total = data?.total ?? Duration.zero;
+            bottomNavigationBar: StreamBuilder<DurationState>(
+              stream: controller.durationState,
+              builder: (context, snapshot) {
+                final data = snapshot.data;
+                final position = data?.position ?? Duration.zero;
+                final total = data?.total ?? Duration.zero;
 
-              return SafeArea(
-                child: AudioPlayerBar(
-                  title: detail?.namaLatin ?? '',
-                  artist: 'Mishary Rashid Alafasy',
-                  current: formatDuration(position),
-                  total: formatDuration(total),
-                  progressDisplay: Slider(
-                    activeColor: AppColors.primary,
-                    value: position.inSeconds.toDouble(),
-                    max: total.inSeconds.toDouble(),
-                    onChanged: (val) {
-                      controller.seek(Duration(seconds: val.toInt()));
+                return SafeArea(
+                  child: AudioPlayerBar(
+                    title: detail?.namaLatin ?? '',
+                    artist: 'Mishary Rashid Alafasy',
+                    current: formatDuration(position),
+                    total: formatDuration(total),
+                    progressDisplay: Slider(
+                      activeColor: AppColors.primary,
+                      value: position.inSeconds.toDouble(),
+                      max: total.inSeconds.toDouble(),
+                      onChanged: (val) {
+                        controller.seek(Duration(seconds: val.toInt()));
+                      },
+                    ),
+                    isPlaying: (controller.isPlaying.value) ? true : false,
+                    onPlayPause: () {
+                      if (controller.isPlaying.value) {
+                        controller.player.pause();
+                        controller.isPlaying(false);
+                      } else {
+                        controller.playAudio(detail?.audio ?? '');
+                      }
+                    },
+                    onNext: () {
+                      controller.nextSurah();
+                    },
+                    onPrevious: () {
+                      controller.previousSurah();
                     },
                   ),
-                  isPlaying: (controller.isPlaying.value) ? true : false,
-                  onPlayPause: () {
-                    if (controller.isPlaying.value) {
-                      controller.player.pause();
-                      controller.isPlaying(false);
-                    } else {
-                      controller.playAudio(detail?.audio ?? '');
-                    }
-                  },
-                  onNext: () {
-                    controller.nextSurah(detail?.audio ?? '');
-                  },
-                  onPrevious: () {
-                    controller.previousSurah(detail?.audio ?? '');
-                  },
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       );

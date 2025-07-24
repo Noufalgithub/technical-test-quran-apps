@@ -1,11 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:quran_apps/app/data/models/ayat_model/ayat_model.dart';
 import 'package:quran_apps/app/data/services/quran_service.dart';
+import 'package:quran_apps/app/modules/home/controllers/home_controller.dart';
 import 'package:rxdart/rxdart.dart'
     show CombineLatestStream, WhereTypeExtension;
 
 class DetailSurahController extends GetxController {
+  final homeController = Get.find<HomeController>();
+
   final QuranService _service = QuranService();
   final player = AudioPlayer();
 
@@ -28,14 +32,21 @@ class DetailSurahController extends GetxController {
     super.onClose();
   }
 
-  void fetchDetailSurah(int nomor) async {
+  Future<void> fetchDetailSurah(int nomor) async {
+    surahDetail.value = null;
+
     try {
       isLoading(true);
       final result = await _service.getDetailSurah(nomor);
       currentSurahNumber(nomor);
       surahDetail.value = result;
     } catch (e) {
-      Get.snackbar('Error', 'Gagal memuat detail surah');
+      Get.snackbar(
+        'Error',
+        'Gagal memuat detail surah',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading(false);
     }
@@ -56,7 +67,12 @@ class DetailSurahController extends GetxController {
       player.play();
       isPlaying(true);
     } catch (e) {
-      Get.snackbar('Error', 'Gagal memutar audio');
+      Get.snackbar(
+        'Error',
+        'Gagal memutar audio',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -64,21 +80,27 @@ class DetailSurahController extends GetxController {
     player.seek(position);
   }
 
-  void nextSurah(String url) {
+  void nextSurah() {
     if (currentSurahNumber.value < 114) {
       currentSurahNumber(currentSurahNumber.value + 1);
       fetchDetailSurah(currentSurahNumber.value + 1);
 
-      playAudio(url);
+      player.pause();
+      isPlaying(false);
+
+      homeController.saveLastRead(nomorSurah: currentSurahNumber.value + 1);
     }
   }
 
-  void previousSurah(String url) {
+  void previousSurah() {
     if (currentSurahNumber.value > 1) {
       currentSurahNumber(currentSurahNumber.value - 1);
       fetchDetailSurah(currentSurahNumber.value - 1);
 
-      playAudio(url);
+      player.pause();
+      isPlaying(false);
+
+      homeController.saveLastRead(nomorSurah: currentSurahNumber.value - 1);
     }
   }
 }
