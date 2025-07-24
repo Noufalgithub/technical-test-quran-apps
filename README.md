@@ -1,6 +1,6 @@
 # 📖 Quran Apps
 
-Quran Apps adalah aplikasi mobile Flutter yang menyediakan kemudahan untuk membaca dan mendengarkan Al-Qur'an secara lengkap dan interaktif. Aplikasi ini mendukung fitur **audio player**, **terakhir dibaca**, dan tampilan modern untuk memudahkan pengguna dalam mengakses ayat suci Al-Qur'an.
+Quran Apps adalah aplikasi mobile Flutter yang menyediakan kemudahan untuk membaca dan mendengarkan Al-Qur'an secara lengkap dan interaktif. Aplikasi ini mendukung fitur **pencarian surah**, **terakhir dibaca**, **audio player** dan tampilan modern untuk memudahkan pengguna dalam mengakses ayat suci Al-Qur'an.
 
 ---
 
@@ -35,5 +35,19 @@ Quran Apps adalah aplikasi mobile Flutter yang menyediakan kemudahan untuk memba
 
 ---
 
-## 🔧 Arsitektur Folder
+## 📦 API yang Digunakan
+
+- List Surah: `https://open-api.my.id/api/quran/surah`
+- Detail Surah: `https://open-api.my.id/api/quran/surah/{nomor}`
+
+---
+
+## 🏁 Cara Menjalankan
+
+```bash
+git clone https://github.com/Noufalgithub/technical-test-quran-apps.git
+cd quran_apps
+flutter pub get
+flutter run
+
 
