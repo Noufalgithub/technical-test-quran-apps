@@ -46,7 +46,7 @@ Quran Apps adalah aplikasi mobile Flutter yang menyediakan kemudahan untuk memba
 
 ```bash
 git clone https://github.com/Noufalgithub/technical-test-quran-apps.git
-cd quran-apps
+cd quran_apps
 flutter pub get
 flutter run
 
