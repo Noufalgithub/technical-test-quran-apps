@@ -40,4 +40,26 @@ class SurahModel {
     'deskripsi': deskripsi,
     'audio': audio,
   };
+
+  SurahModel copyWith({
+    int? nomor,
+    String? nama,
+    String? namaLatin,
+    int? jumlahAyat,
+    String? tempatTurun,
+    String? arti,
+    String? deskripsi,
+    String? audio,
+  }) {
+    return SurahModel(
+      nomor: nomor ?? this.nomor,
+      nama: nama ?? this.nama,
+      namaLatin: namaLatin ?? this.namaLatin,
+      jumlahAyat: jumlahAyat ?? this.jumlahAyat,
+      tempatTurun: tempatTurun ?? this.tempatTurun,
+      arti: arti ?? this.arti,
+      deskripsi: deskripsi ?? this.deskripsi,
+      audio: audio ?? this.audio,
+    );
+  }
 }

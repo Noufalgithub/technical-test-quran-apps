@@ -41,6 +41,10 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       body: Obx(() {
+        final lastReadFromStorage = box.read<int>(
+          StringConstants.lastReadNomorSurah,
+        );
+
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -48,8 +52,10 @@ class HomeView extends GetView<HomeController> {
         return SafeArea(
           child: Column(
             children: [
-              (box.read(StringConstants.lastReadNomorSurah) != null)
-                  ? Container(
+              (controller.lastReadNomorSurah.value == 0 ||
+                      lastReadFromStorage == null)
+                  ? const SizedBox()
+                  : Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 8,
@@ -95,8 +101,7 @@ class HomeView extends GetView<HomeController> {
                           );
                         },
                       ),
-                    )
-                  : const SizedBox(),
+                    ),
               const SizedBox(height: 6),
               SearchBox(
                 onChanged: (value) => controller.searchText.value = value,
